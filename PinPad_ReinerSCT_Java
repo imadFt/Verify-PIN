@@ -30,7 +30,7 @@ This is a code example of how you can verify PIN via PinPad Reader, tested for R
         ///FEATURE_MCT_READER_DIRECT 04 42000d0ffffffb4
         ///FEATURE_MCT_UNIVERSAL     04 42000d0ffffffb5
         
-      String VerifyPin = 0000020000060602ff1b04000000000400000000200081 // where 00200081 is your CLA INS P1 P2 expected by the card for Verify PIN 
+      String VerifyPin = 0000020000060602ff1b04000000000400000000200081 // where 200081 is your CLA INS P1 P2 expected by the card for Verify PIN 
       resp = card.transmitControlCommand(42000d0ffffffb2, hexStringToByteArray(VerifyPin));
       // 42000d0ffffffb2 is the value i get from the previous command regarding the FEATURE_VERIFY_PIN_DIRECT.
       
