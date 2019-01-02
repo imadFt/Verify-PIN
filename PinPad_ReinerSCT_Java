@@ -1,7 +1,7 @@
 Verify PIN via PinPad Reader ReinerSCT  
  
  
-This is an example of hwo you can verify PIN via PinPad tested for ReinerSCT in java:
+This is a code example of how you can verify PIN via PinPad Reader, tested for ReinerSCT in java:
  
  
      int CM_IOCTL_GET_FEATURE_REQUEST =  
