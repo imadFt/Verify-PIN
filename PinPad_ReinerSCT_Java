@@ -1,0 +1,52 @@
+Verify PIN via PinPad Reader ReinerSCT  
+ 
+ 
+This is an example of hwo you can verify PIN via PinPad tested for ReinerSCT in java:
+ 
+ 
+     int CM_IOCTL_GET_FEATURE_REQUEST =  
+        if (os.indexOf("windows") != -1) {
+            return 0x31 << 16 | 3400 << 2;
+        } else {
+            return 0x42000000 + 3400;
+
+     // Display the list of terminals
+	    TerminalFactory factory = TerminalFactory.getDefault();
+		terminals = factory.terminals().list();
+        terminal = terminals.get(index);// index of the reader in the list
+	    card = terminal.connect("*");
+	    channel = card.getBasicChannel();
+			ATR atr = card.getATR();
+
+
+      //Send: Selecte application 
+      ResponseAPDU answer=channel.transmit(new CommandAPDU( (int)00, (int)A4, (int)00, (int)80, Aid));
+      
+      // Get the Feature supported by the Reader
+      byte[] resp = c.transmitControlCommand(CM_IOCTL_GET_FEATURE_REQUEST, new byte[]{});
+      // exmple of resp = 060442000d0ffffffb2070442000d0ffffffb3080442000d0ffffffb4090442000d0ffffffb5 ---->
+        ///FEATURE_VERIFY_PIN_DIRECT 04 42000d0ffffffb2
+        ///FEATURE_MODIFY_PIN_DIRECT 04 42000d0ffffffb3
+        ///FEATURE_MCT_READER_DIRECT 04 42000d0ffffffb4
+        ///FEATURE_MCT_UNIVERSAL     04 42000d0ffffffb5
+        
+      String VerifyPin = 0000020000060602ff1b04000000000400000000200081 // wher 00200081 is you CLAS INS P1 P2 expected by the card for Verify PIN 
+      resp = c.transmitControlCommand(42000d0ffffffb2, hexStringToByteArray(VerifyPin));
+      // 42000d0ffffffb2 is the value i get from the privieus command regarding the FEATURE_VERIFY_PIN_DIRECT.
+      
+      
+      
+      
+      
+      
+    Tags of GET_FEATURE_REQUEST :  
+    static final Byte FEATURE_VERIFY_PIN_START = new Byte((byte) 0x01); 
+    static final Byte FEATURE_VERIFY_PIN_FINISH = new Byte((byte) 0x02); 
+    static final Byte FEATURE_MODIFY_PIN_START = new Byte((byte) 0x03); 
+    static final Byte FEATURE_MODIFY_PIN_FINISH = new Byte((byte) 0x04); 
+    static final Byte FEATURE_GET_KEY_PRESSED = new Byte((byte) 0x05); 
+    static final Byte FEATURE_VERIFY_PIN_DIRECT = new Byte((byte) 0x06); 
+    static final Byte FEATURE_MODIFY_PIN_DIRECT = new Byte((byte) 0x07); 
+    static final Byte FEATURE_MCT_READER_DIRECT = new Byte((byte) 0x08); 
+    static final Byte FEATURE_MCT_UNIVERSAL = new Byte((byte) 0x09); 
+    static final Byte FEATURE_IFD_PIN_PROPERTIES = new Byte((byte) 0x0a); 
