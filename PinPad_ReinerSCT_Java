@@ -19,7 +19,7 @@ This is an example of hwo you can verify PIN via PinPad tested for ReinerSCT in 
 	ATR atr = card.getATR();
 
 
-      //Send: Selecte application 
+      //Send: Select application 
       ResponseAPDU answer=channel.transmit(new CommandAPDU( (int)00, (int)A4, (int)00, (int)80, Aid));
       
       // Get the Feature supported by the Reader
@@ -30,9 +30,9 @@ This is an example of hwo you can verify PIN via PinPad tested for ReinerSCT in 
         ///FEATURE_MCT_READER_DIRECT 04 42000d0ffffffb4
         ///FEATURE_MCT_UNIVERSAL     04 42000d0ffffffb5
         
-      String VerifyPin = 0000020000060602ff1b04000000000400000000200081 // wher 00200081 is you CLAS INS P1 P2 expected by the card for Verify PIN 
+      String VerifyPin = 0000020000060602ff1b04000000000400000000200081 // where 00200081 is your CLA INS P1 P2 expected by the card for Verify PIN 
       resp = card.transmitControlCommand(42000d0ffffffb2, hexStringToByteArray(VerifyPin));
-      // 42000d0ffffffb2 is the value i get from the privieus command regarding the FEATURE_VERIFY_PIN_DIRECT.
+      // 42000d0ffffffb2 is the value i get from the previous command regarding the FEATURE_VERIFY_PIN_DIRECT.
       
       
       
